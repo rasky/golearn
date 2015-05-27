@@ -30,7 +30,6 @@ func main() {
 	}
 	defer res.Body.Close()
 
-	// STEP 2: implement CSV parsing into data structure, and output to stdout
 	records, err := csv.NewReader(res.Body).ReadAll()
 	if err != nil {
 		log.Fatal(err)
@@ -57,4 +56,6 @@ func main() {
 	}
 
 	fmt.Println(people)
+
+	// STEP 3: Move parsing into a background goroutine, doing its job every hour
 }
