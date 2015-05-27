@@ -64,20 +64,22 @@ func UpdateDB() {
 		db, err := downloadDb()
 		if err == nil {
 			PeopleDb = db
-			jdata, err := json.MarshalIndent(&PeopleDb, "", "    ")
-			if err != nil {
-				panic(err)
-			} else {
-				log.Println("NEWDB", string(jdata))
-			}
+			log.Println("New DB:", PeopleDb)
 		}
 		time.Sleep(5 * time.Second)
 	}
 }
 
 func GetDB(rw http.ResponseWriter, req *http.Request) {
-	// STEP 5: implement HTTP server which servers the JSON over an endpoint
 
+	jdata, err := json.MarshalIndent(&PeopleDb, "", "    ")
+	if err != nil {
+		rw.WriteHeader(500)
+		return
+	}
+
+	rw.Header().Add("Content-type", "application/json")
+	rw.Write(jdata)
 }
 
 func main() {
