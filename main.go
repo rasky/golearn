@@ -75,11 +75,17 @@ func UpdateDB() {
 	}
 }
 
+func GetDB(rw http.ResponseWriter, req *http.Request) {
+	// STEP 5: implement HTTP server which servers the JSON over an endpoint
+
+}
+
 func main() {
 
 	go UpdateDB()
 
-	// STEP 5: implement HTTP server which servers the JSON over an endpoint
+	http.HandleFunc("/getdb", GetDB)
+	http.ListenAndServe(":8080", nil)
 
 	select {}
 
