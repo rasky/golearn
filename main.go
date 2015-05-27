@@ -64,7 +64,6 @@ func UpdateDB() {
 		db, err := downloadDb()
 		if err == nil {
 			PeopleDb = db
-			// STEP 4: Change this debug print to dump in JSON
 			jdata, err := json.MarshalIndent(&PeopleDb, "", "    ")
 			if err != nil {
 				panic(err)
@@ -79,6 +78,8 @@ func UpdateDB() {
 func main() {
 
 	go UpdateDB()
+
+	// STEP 5: implement HTTP server which servers the JSON over an endpoint
 
 	select {}
 
