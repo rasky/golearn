@@ -3,10 +3,13 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
+	"flag"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/VividCortex/godaemon"
 )
 
 // Click on this link to view the spreadsheet
@@ -82,9 +85,14 @@ func GetDB(rw http.ResponseWriter, req *http.Request) {
 	rw.Write(jdata)
 }
 
+var flagDaemon = flag.Bool("daemon", false, "daemonize")
+
 func main() {
 
-	// STEP 6: when passed -daemon, deamonize with https://github.com/VividCortex/godaemon
+	flag.Parse()
+	if *flagDaemon {
+		godaemon.MakeDaemon(&godaemon.DaemonAttr{})
+	}
 
 	go UpdateDB()
 
