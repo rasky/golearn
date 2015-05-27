@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/csv"
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -22,11 +21,13 @@ type Person struct {
 	Tags     []string
 }
 
-func main() {
+var PeopleDb []Person
 
+func downloadDb() ([]Person, error) {
 	res, err := http.Get(CSV_URL)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return []Person{}, err
 	}
 	defer res.Body.Close()
 
@@ -54,8 +55,25 @@ func main() {
 		}
 		people = append(people, p)
 	}
+	return people, nil
+}
 
-	fmt.Println(people)
+func UpdateDB() {
+	for {
+		db, err := downloadDb()
+		if err == nil {
+			PeopleDb = db
+			// STEP 4: Change this debug print to dump in JSON
+			log.Println("NEWDB", PeopleDb)
+		}
+		time.Sleep(5 * time.Second)
+	}
+}
 
-	// STEP 3: Move parsing into a background goroutine, doing its job every hour
+func main() {
+
+	go UpdateDB()
+
+	select {}
+
 }
