@@ -86,7 +86,4 @@ func main() {
 
 	http.HandleFunc("/getdb", GetDB)
 	http.ListenAndServe(":8080", nil)
-
-	select {}
-
 }
