@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"log"
 	"net/http"
 	"strings"
@@ -64,7 +65,12 @@ func UpdateDB() {
 		if err == nil {
 			PeopleDb = db
 			// STEP 4: Change this debug print to dump in JSON
-			log.Println("NEWDB", PeopleDb)
+			jdata, err := json.MarshalIndent(&PeopleDb, "", "    ")
+			if err != nil {
+				panic(err)
+			} else {
+				log.Println("NEWDB", string(jdata))
+			}
 		}
 		time.Sleep(5 * time.Second)
 	}
