@@ -84,6 +84,8 @@ func GetDB(rw http.ResponseWriter, req *http.Request) {
 
 func main() {
 
+	// STEP 6: when passed -daemon, deamonize with https://github.com/VividCortex/godaemon
+
 	go UpdateDB()
 
 	http.HandleFunc("/getdb", GetDB)
