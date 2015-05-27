@@ -14,7 +14,6 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/1R7xpW4LTGj__B-W8qFKTxYs
 
 func main() {
 
-	// STEP 1: implement CSV download
 	res, err := http.Get(CSV_URL)
 	if err != nil {
 		log.Fatal(err)
@@ -25,4 +24,7 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("%s", data)
+
+	// STEP 2: implement CSV parsing into data structure, and output to stdout
+
 }
